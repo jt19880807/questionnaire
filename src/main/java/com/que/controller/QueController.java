@@ -10,14 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/que")
 public class QueController {
-    @RequestMapping("/testing")
+    @RequestMapping("que/testing")
     public String testing( Model model) {
 
         return "/que/testing";
     }
-    @RequestMapping("/result")
+    @RequestMapping("que/result")
     public String  listUser(Model model) {
         List<User> userList = new ArrayList<User>();
         for (int i = 0; i <10; i++) {

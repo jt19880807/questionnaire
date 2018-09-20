@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>优质分包商满意度调查问卷</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/js/vue.js" ></script>
+    <script src="/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body style="background-color: #F5F5F5;">
+<div class="container" id="app">
+    <div class="navbar navbar-default navbar-fixed-top">
+
+        <div class="row">
+            <div class="col-sm-2">
+
+            </div>
+            <div class="col-sm-2">
+                <!-- <p class="navbar-text">测试人</p><input type="text" style="width: 150px; margin-top: 4%; " class="form-control"/> -->
+            </div>
+            <div class="col-sm-2">
+                <!-- <p class="navbar-text">应聘岗位</p>
+                <input type="text" style="width: 150px;margin-top: 4%; " class="form-control" /> -->
+            </div>
+            <div class="col-sm-2">
+                <!-- <p class="navbar-text">日期</p>
+                <input type="text" style="width: 150px;margin-top: 4%;" :value="time" class="form-control"/> -->
+            </div>
+            <div class="col-sm-2">
+                <!-- <p class="navbar-text" style="font-size: 20px;color: #000000;">得分：<strong>{{totalScopt()}}</strong>&nbsp;分</p>						 -->
+                <button @click="save" style="margin-top: 4%;" class="btn btn-primary">提交</button>
+            </div>
+            <div class="col-sm-2">
+
+            </div>
+        </div>
+
+
+    </div>
+    <div style="height: 50px;"></div>
+    <header class="page-header">
+        <h3 class="text-center">{{message}}</h3>
+    </header>
+    <ul class="list-group">
+        <li class="list-group-item " v-for="(que,i) in questions">
+            <h4><b>{{que.id}}、{{que.subject}}</b></h4>
+            <h5 style="color: red" v-if="que.answercount===0">请选择一项</h5>
+            <ul class="list-inline">
+                <li style="cursor: pointer;margin-right: 15px;margin-top: 5px;" class="list-group-item"  v-bind:class="{active:opt.isselected}"
+                    v-for="(opt,j) in que.options"
+                    v-on:click="checkKey(i,j,que.single)">
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{opt.name}}&nbsp;&nbsp;&nbsp;&nbsp;
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</div>
+
+
+<script type="text/javascript">
+    new Vue({
+        el:"#app",
+        data:{
+            message:"优质分包商满意度调查问卷",
+            time:date2str(new Date(),"yyyy-MM-dd"),
+            questions:'',
+        },
+        methods:{
+            checkKey(parentIndex,index,single){//点击答案
+                // console.log(single);
+                if(single){//单选
+                    for (var i=0;i<this.questions[parentIndex].options.length;i++) {
+                        if(this.questions[parentIndex].options[i].isselected==true){
+                            this.questions[parentIndex].options[i].isselected=false;
+                        }
+                    }
+                    this.questions[parentIndex].options[index].isselected=true;
+                    this.questions[parentIndex].answercount=1;
+                }
+                else{//多选
+                    this.questions[parentIndex].options[index].isselected=!this.questions[parentIndex].options[index].isselected
+                }
+            },
+            initData(){
+                this.$http.get('../data/questions.json').then((response) => {
+                    this.questions=response.body.data;
+            }, (response) => {
+
+                })
+            },
+            validate(){
+
+            },
+            save(){
+                console.log("save");
+            },
+        },
+        mounted () {
+            this.initData();
+        },
+
+    })
+
+</script>
+</body>
+</html>
