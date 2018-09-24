@@ -4,7 +4,7 @@
 			"id":1,
 			"subject":"您是否参建过中建二局系统内2家及以上子企业或区域公司的工程项目？（单选题）",
 			"single":true,
-			"answercount":0,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"是",
@@ -22,7 +22,7 @@
 			"id":2,
 			"subject":"您所合作的中建二局系统企业有哪些？（多项选择题，至少选1项）",
 			"single":false,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"一公司",
@@ -100,7 +100,7 @@
 			"id":3,
 			"subject":"请您对参建项目的施工管理、合同结算、资金付款等方面进行评价：（单选题）",
 			"single":true,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"满意",
@@ -128,7 +128,7 @@
 			"id":4,
 			"subject":"您认为与您合作的单位在哪些方面还可以做得更好？（多项选择题，至少选1项）",
 			"single":false,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"工期计划方面",
@@ -176,7 +176,7 @@
 			"id":5,
 			"subject":"您是否参建过中建股份系统内其他工程局的项目？（单选题）",
 			"single":true,
-			"answercount":1,
+			"answercount":-1,
 			"options":[			
 				{
 					"name":"是",
@@ -194,7 +194,7 @@
 			"id":6,
 			"subject":"您企业现有成熟的管理团队大约有几个？（单选题）",
 			"single":true,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"5个以下",
@@ -227,7 +227,7 @@
 			"id":7,
 			"subject":"您是否愿意在同等条件下更多承接中建二局系统内各单位的工程项目？（单选题）",
 			"single":true,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"是",
@@ -245,7 +245,7 @@
 			"id":8,
 			"subject":"您是否享有过优质分包商的特殊权利？（多项选择题，至少选1项）",
 			"single":false,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"免交投标保证金",
@@ -283,7 +283,7 @@
 			"id":9,
 			"subject":"您认为您企业现有劳务管理团队能平均承接的施工作业面积最大值是多少？（单选题）",
 			"single":true,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"5万平米以下",
@@ -311,7 +311,7 @@
 			"id":10,
 			"subject":"您现有劳务管理团队的平均人数是多少？（单选题）",
 			"single":true,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"15人以下",
@@ -339,7 +339,7 @@
 			"id":11,
 			"subject":"您企业的注册资本金是多少？（单选题）",
 			"single":true,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"1000万以下（不含1000万）",
@@ -367,7 +367,7 @@
 			"id":12,
 			"subject":"您是否为增值税一般纳税人？（单选题）",
 			"single":true,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"是",
@@ -385,7 +385,7 @@
 			"id":13,
 			"subject":"您企业中长期战略规划中，计划与中建二局系统内单位的合作年限是多长时间？（单选题）",
 			"single":true,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				{
 					"name":"5年以下",
@@ -413,7 +413,7 @@
 			"id":14,
 			"subject":"除劳务分包合同外，您希望在哪些方面与中建二局加深合作共赢？（必填）",
 			"single":false,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 				
 			]
@@ -422,7 +422,7 @@
 			"id":15,
 			"subject":"您是否愿意留下您企业的姓名？（选填）",
 			"single":false,
-			"answercount":1,
+			"answercount":-1,
 			"options":[
 			
 			]

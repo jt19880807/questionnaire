@@ -13,22 +13,16 @@
 
         <div class="row">
             <div class="col-sm-2">
-
             </div>
             <div class="col-sm-2">
-                <!-- <p class="navbar-text">测试人</p><input type="text" style="width: 150px; margin-top: 4%; " class="form-control"/> -->
             </div>
             <div class="col-sm-2">
-                <!-- <p class="navbar-text">应聘岗位</p>
-                <input type="text" style="width: 150px;margin-top: 4%; " class="form-control" /> -->
             </div>
             <div class="col-sm-2">
-                <!-- <p class="navbar-text">日期</p>
-                <input type="text" style="width: 150px;margin-top: 4%;" :value="time" class="form-control"/> -->
             </div>
             <div class="col-sm-2">
-                <!-- <p class="navbar-text" style="font-size: 20px;color: #000000;">得分：<strong>{{totalScopt()}}</strong>&nbsp;分</p>						 -->
                 <button @click="save" style="margin-top: 4%;" class="btn btn-primary">提交</button>
+                <b v-if="pass===false" style="color: red">请答完所以必选题目</b>
             </div>
             <div class="col-sm-2">
 
@@ -44,13 +38,18 @@
     <ul class="list-group">
         <li class="list-group-item " v-for="(que,i) in questions">
             <h4><b>{{que.id}}、{{que.subject}}</b></h4>
-            <h5 style="color: red" v-if="que.answercount===0">请选择一项</h5>
+            <h5 style="color: red" v-if="que.answercount===0">请作答</h5>
+            <input type="text" class="form-control" v-if="i===13" v-model="model14" placeholder="无、物资供应、周转料具租赁、机械设备租赁等等" />
+            <input type="text" class="form-control" v-if="i===14" v-model="model15" placeholder="**劳务公司" />
             <ul class="list-inline">
                 <li style="cursor: pointer;margin-right: 15px;margin-top: 5px;" class="list-group-item"  v-bind:class="{active:opt.isselected}"
                     v-for="(opt,j) in que.options"
                     v-on:click="checkKey(i,j,que.single)">
                     &nbsp;&nbsp;&nbsp;&nbsp;{{opt.name}}&nbsp;&nbsp;&nbsp;&nbsp;
                 </li>
+                <input style="display: inline;width: 20%;" :disabled="questions[3].options[7].isselected===false" 
+                type="text" class="form-control" v-model="model4" v-if="i===3" placeholder="必填" />
+                <h5 style="color: red" v-if="i===3" v-show="questions[3].options[7].isselected&&model4===''">请作答</h5>
             </ul>
         </li>
     </ul>
@@ -63,8 +62,12 @@
         el:"#app",
         data:{
             message:"优质分包商满意度调查问卷",
-            time:date2str(new Date(),"yyyy-MM-dd"),
+            time:'',
             questions:'',
+            pass:true,
+            model4:'',
+            model14:'',
+            model15:'',
         },
         methods:{
             checkKey(parentIndex,index,single){//点击答案
@@ -80,25 +83,117 @@
                 }
                 else{//多选
                     this.questions[parentIndex].options[index].isselected=!this.questions[parentIndex].options[index].isselected
+                    var count=0;
+                    for (var i=0;i<this.questions[parentIndex].options.length;i++) {
+                        if(this.questions[parentIndex].options[i].isselected==true){
+                            count++;
+                        }
+                    }
+                    this.questions[parentIndex].answercount=count;
                 }
             },
             initData(){
+                //console.log("initData");
                 this.$http.get('../data/questions.json').then((response) => {
+                    
                     this.questions=response.body.data;
             }, (response) => {
 
                 })
             },
             validate(){
+                var errorCount=0;
+                for (var i=0;i<13;i++){
 
+                    if (this.questions[i].answercount<0||this.questions[i].answercount===0){
+                        this.questions[i].answercount=0;
+                        errorCount++;
+                    }
+                }
+                if(this.questions[3].options[7].isselected&&this.model4===''){
+                    errorCount++;
+                }
+                if(this.model14===''){
+                    errorCount++;
+                    this.questions[13].answercount=0;
+                }
+                else{
+                    this.questions[13].answercount=1;
+                }
+                if (errorCount>0){
+                    return false;
+                }
+                return true;
             },
             save(){
-                console.log("save");
+                
+                if (this.validate()){
+                    this.pass=true;
+                    console.log(this.getAnswers());
+                    //提交服务器
+                    // this.$http.post("/que/save?",{"answers":"1,2,3"})
+                    //     .then((respose)=>{
+
+                    // }).catch(function (response)
+                    // { console.error(response);
+                    // });
+                } else {
+                    this.pass=false;
+                
+                }
             },
+            getAnswers(){
+                console.log("getAnsers");
+                var ans='';
+                for(var i=0;i<this.questions.length;i++){
+                    ans+=i+1+"-";
+                    if(i===1||i===7){
+                        for(var j=0;j<this.questions[i].options.length;j++){
+                            if(this.questions[i].options[j].isselected){
+                                ans+=j+1+"_";
+                            }
+                        }
+                    }
+                    else if(i===3){
+                        for(var j=0;j<this.questions[i].options.length;j++){
+                            if(this.questions[i].options[j].isselected){
+                                if(j===7){
+                                    ans+=j+1+"_"+this.model4;
+                                }
+                                else{
+                                    ans+=j+1+"_";
+                                }
+                            }
+                        }
+                    }
+                    else if(i===13){
+                        ans+=this.model14;
+                    }
+                    else if(i===14){
+                        ans+=this.model15;
+                    }
+                    else {
+                        for (var j = 0; j < this.questions[i].options.length; j++) {
+                            if (this.questions[i].options[j].isselected) {
+                                ans += j + 1 + "_";
+                                break;
+                            }
+                        }
+                    }
+                    ans+="|";
+                }
+                return ans;
+            }
         },
-        mounted () {
+        mounted() {
+          //  console.log("mounte");
             this.initData();
-        },
+        }
+        // watch:{
+        //     model14(newVal,oldVal){
+        //         console.log(newVal);
+        //     },
+        // },
 
     })
 
